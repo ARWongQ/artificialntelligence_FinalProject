@@ -179,7 +179,14 @@ class TicTacToe:
         self.boardOptions()
         print("Current Player: " + currentPlayer)
         move = raw_input("Enter the number of your next move:")
-        move = int(move)
+        try:
+            move = int(move)
+        except ValueError:
+            print("Please enter a valid move number between 0 and 8.")
+            return self.makeMove(currentPlayer)
+        if move < 0 or move > 8:
+            print("Move was invalid.")
+            return self.makeMove(currentPlayer)
         j = move % 3
         i = (move-j)/3
         if self.grid[i][j].isEmpty == False:
