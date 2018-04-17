@@ -12,8 +12,10 @@ class TicTacToe:
             node = self.grid[lineNumb][i]
             if(node.isEmpty == False):
                 str += node.val
+
             else:
                 str += " "
+
 
         return str
 
