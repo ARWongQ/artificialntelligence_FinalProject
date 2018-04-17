@@ -7,6 +7,7 @@ class UltimateTTT:
         self.currentBoard = [1, 1]
         self.hasWon = False
         self.wonBy = ' '
+        self.currentPlayer = 'X'
 
     #Displays the current board
     def displayBoard(self):
@@ -27,6 +28,8 @@ class UltimateTTT:
 
     #Sets the winner of the game!
     def setWinner(self, winner):
+        if(self.hasWon):
+            return
         print("The Ultimate Tic Tac Toe Winner is " + winner)
         self.hasWon = True
         self.wonBy = winner
@@ -113,8 +116,8 @@ class UltimateTTT:
                 oCount += 1
 
             #Update index
-                i += 1
-                j += 1
+            i += 1
+            j += 1
 
         #Check if anyCount is good enough to set winner
         if(xCount == 3):
@@ -145,8 +148,8 @@ class UltimateTTT:
                 oCount += 1
 
             #Update index
-                i += 1
-                j += 1
+            i -= 1
+            j += 1
 
         #Check if anyCount is good enough to set winner
         if(xCount == 3):
@@ -171,10 +174,19 @@ class UltimateTTT:
     #Move
     def move(self):
         currentBoard = self.currentBoard
-        self.currentBoard = self.mainGrid[currentBoard[0]][currentBoard[1]].makeMove()
+        self.currentBoard = self.mainGrid[currentBoard[0]][currentBoard[1]].makeMove(self.currentPlayer)
+        self.mainGrid[currentBoard[0]][currentBoard[1]].checkWinner()
+        if self.currentPlayer == 'X':
+            self.currentPlayer = 'O'
+        else:
+            self.currentPlayer = 'X'
 
     #Play
     def play(self):
-        for i in xrange(10):
+        for i in xrange(500):
             self.displayBoard()
             self.move()
+            self.checkWinner()
+            if self.hasWon:
+                self.displayBoard()
+                return
