@@ -1,6 +1,6 @@
 #Main Function
 def main():
-    print("Running Kalman Filter")
+    print("Running Ultimate Tic Tac Toe")
 
 #Run the main function
 if __name__ == "__main__":
