@@ -6,8 +6,10 @@ class randomAgent:
         self.name = "Random Agent"
 
     #Returns a random move between 0-8
-    def getMove(self):
-        return random.randint(0,8)
+    def getMove(self, possibleMoves):
+
+        i =random.randint(0,len(possibleMoves))
+        return possibleMoves[i]
 
 
 

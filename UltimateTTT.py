@@ -198,10 +198,18 @@ class UltimateTTT:
     #Plays Player v Cpu
     def playTwo(self, Agent1):
         for i in xrange(82):
+            self.displayBoard()
+
             if(i%2 == 0):
                 self.move(None)
             else:
                 self.move(Agent1)
+
+
+            self.checkWinner()
+            if self.hasWon:
+                self.displayBoard()
+                return
 
 
 

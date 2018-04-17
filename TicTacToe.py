@@ -178,12 +178,31 @@ class TicTacToe:
     def makeMove(self, currentPlayer, Agent1):
         self.boardOptions()
         print("Current Player: " + currentPlayer)
+
+
+
+
         if Agent1 != None:
-            move = Agent1.getMove()
+            #Get all the possible actions for the boards
+            possibleMoves = []
+            for i in xrange(3):
+                for j in xrange(3):
+                    node = self.grid[i][j]
+                    if(node.isEmpty):
+                        possibleMoves.append(i*3 + j)
+            move = Agent1.getMove(possibleMoves)
 
         else:
             move = raw_input("Enter the number of your next move:")
-            move = int(move)
+            try:
+                move = int(move)
+            except ValueError:
+                print("Please enter a valid move number between 0 and 8.")
+                return self.makeMove(currentPlayer, Agent1)
+
+            if move < 0 or move > 8:
+                print("Move was invalid.")
+                return self.makeMove(currentPlayer, Agent1)
 
         j = move % 3
         i = (move-j)/3
@@ -193,6 +212,8 @@ class TicTacToe:
         else:
             self.grid[i][j].val = currentPlayer
             self.grid[i][j].isEmpty = False
+
+            print("Move " + str(move))
             return [i, j]
 
 

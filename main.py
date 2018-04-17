@@ -7,7 +7,7 @@ def main():
     myBoard = UltimateTTT()
     rAgent = randomAgent()
 
-    myBoard.play()
+    #myBoard.play()
 
     myBoard.playTwo(rAgent)
 
