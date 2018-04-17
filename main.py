@@ -6,9 +6,11 @@ def main():
     myBoard = UltimateTTT()
 
 
-    myBoard.displayBoard()
+    # myBoard.displayBoard()
 
+    # myBoard.mainGrid[0][0].boardOptions()
 
+    myBoard.play()
 
 
 #Run the main function

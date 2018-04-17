@@ -4,6 +4,7 @@ from TicTacToe import TicTacToe
 class UltimateTTT:
     def __init__(self):
         self.mainGrid = [[TicTacToe() for j in range(3)] for i in range(3)]
+        self.currentBoard = [1, 1]
 
     #Displays the current board
     def displayBoard(self):
@@ -12,10 +13,12 @@ class UltimateTTT:
             for i in xrange(3):
                 for j in xrange(3):
                     str += self.mainGrid[k][j].getLineString(i)
-                    str += "|"
+                    if (j+1) % 3 != 0:
+                        str += "|"
 
                 str += "\n"
-            str += "-------------"
+            if (k+1) % 3 != 0:
+                str += "-----------"
             str += "\n"
         print(str)
 
@@ -25,4 +28,11 @@ class UltimateTTT:
 
     #Move
     def move(self):
-        pass
+        currentBoard = self.currentBoard
+        self.currentBoard = self.mainGrid[currentBoard[0]][currentBoard[1]].makeMove()
+
+    #Play
+    def play(self):
+        for i in xrange(10):
+            self.displayBoard()
+            self.move()
