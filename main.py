@@ -3,14 +3,10 @@ from UltimateTTT import UltimateTTT
 def main():
     print("Running Ultimate Tic Tac Toe")
 
-    myBoard = UltimateTTT()
-
-
+    #myBoard = UltimateTTT()
     # myBoard.displayBoard()
-
     # myBoard.mainGrid[0][0].boardOptions()
-
-    myBoard.play()
+    #myBoard.play()
 
 
 #Run the main function
