@@ -23,4 +23,34 @@ class TicTacToe:
 
     #Move
     def makeMove(self):
-        pass
+        self.boardOptions()
+        move = raw_input("Enter the number of your next move:")
+        move = int(move)
+        j = move % 3
+        i = (move-j)/3
+        if self.grid[i][j].isEmpty == False:
+            print("Move was invalid.")
+            return self.makeMove()
+        else:
+            self.grid[i][j].val = 'X'
+            self.grid[i][j].isEmpty = False
+            return [i, j]
+
+
+
+    #Print Board for Move
+    def boardOptions(self):
+        string = ""
+        for i in xrange(3):
+            for j in xrange(3):
+                node = self.grid[i][j]
+                if(node.isEmpty == False):
+                    string += node.val
+                else:
+                    string += str(i*3+j)
+                if (j+1) % 3 != 0:
+                    string += "|"
+            string += "\n"
+            if (i+1) % 3 != 0:
+                string += "-|-|-\n"
+        print(string)
