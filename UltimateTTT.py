@@ -172,21 +172,43 @@ class UltimateTTT:
         self.diagonalWinner()
 
     #Move
-    def move(self):
+    def move(self, Agent1):
         currentBoard = self.currentBoard
-        self.currentBoard = self.mainGrid[currentBoard[0]][currentBoard[1]].makeMove(self.currentPlayer)
+        self.currentBoard = self.mainGrid[currentBoard[0]][currentBoard[1]].makeMove(self.currentPlayer, Agent1)
         self.mainGrid[currentBoard[0]][currentBoard[1]].checkWinner()
         if self.currentPlayer == 'X':
             self.currentPlayer = 'O'
         else:
             self.currentPlayer = 'X'
 
-    #Play
+    #Plays Player v Player
     def play(self):
-        for i in xrange(500):
+        for i in xrange(82):
             self.displayBoard()
-            self.move()
+            self.move(None)
             self.checkWinner()
             if self.hasWon:
                 self.displayBoard()
                 return
+
+    #
+    def moveAgent(self):
+        pass
+
+    #Plays Player v Cpu
+    def playTwo(self, Agent1):
+        for i in xrange(82):
+            if(i%2 == 0):
+                self.move(None)
+            else:
+                self.move(Agent1)
+
+
+
+    #Plats Cpu v Cpu
+    def playThree(self, Agent1, Agent2):
+        for i in xrange(82):
+            if(i%2 == 0):
+                self.moveAgent(Agent1)
+            else:
+                self.moveAgent(Agent2)

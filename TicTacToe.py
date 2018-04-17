@@ -175,16 +175,21 @@ class TicTacToe:
 
 
     #Move
-    def makeMove(self, currentPlayer):
+    def makeMove(self, currentPlayer, Agent1):
         self.boardOptions()
         print("Current Player: " + currentPlayer)
-        move = raw_input("Enter the number of your next move:")
-        move = int(move)
+        if Agent1 != None:
+            move = Agent1.getMove()
+
+        else:
+            move = raw_input("Enter the number of your next move:")
+            move = int(move)
+
         j = move % 3
         i = (move-j)/3
         if self.grid[i][j].isEmpty == False:
             print("Move was invalid.")
-            return self.makeMove(currentPlayer)
+            return self.makeMove(currentPlayer, Agent1)
         else:
             self.grid[i][j].val = currentPlayer
             self.grid[i][j].isEmpty = False

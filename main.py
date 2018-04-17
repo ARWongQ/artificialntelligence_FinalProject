@@ -1,10 +1,15 @@
 from UltimateTTT import UltimateTTT
+from randomAgent import  randomAgent
 #Main Function
 def main():
     print("Running Ultimate Tic Tac Toe")
 
     myBoard = UltimateTTT()
+    rAgent = randomAgent()
+
     myBoard.play()
+
+    myBoard.playTwo(rAgent)
 
 
 #Run the main function
