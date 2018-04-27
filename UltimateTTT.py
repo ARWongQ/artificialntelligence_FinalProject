@@ -9,6 +9,31 @@ class UltimateTTT:
         self.wonBy = ' '
         self.currentPlayer = 'X'
 
+    #Displays winners of the entire UTTT
+    def displayWinningBoards(self):
+        print("The board's result!")
+
+        string = ""
+        for i in xrange(3):
+            for j in xrange(3):
+
+                boardTTT = self.mainGrid[i][j]
+
+                if(boardTTT.hasWon):
+                    string += boardTTT.wonBy
+                else:
+                    string += "N"
+
+                string += " |"
+
+
+                if(((i*3 + j)+1) % 3 == 0 and j != 0):
+                    string += "\n"
+
+        print string
+
+
+
     #Displays the current board
     def displayBoard(self):
         str = ""
@@ -34,6 +59,8 @@ class UltimateTTT:
         self.hasWon = True
         self.wonBy = winner
         #Do something to stop the program!
+
+        self.displayWinningBoards()
 
     #Check for a winner in the horizontal lines
     def horizontalWinner(self):
@@ -177,6 +204,7 @@ class UltimateTTT:
 
         print("There is TIE! ")
         self.hasWon = True
+        self.displayWinningBoards()
 
 
     # Tie happens when all tic tac toe boards are taken and there is still no winner
@@ -305,10 +333,6 @@ class UltimateTTT:
             if self.hasWon:
                 self.displayBoard()
                 return
-
-    #
-    def moveAgent(self):
-        pass
 
     #Plays Player v Cpu
     def playTwo(self, Agent1):
