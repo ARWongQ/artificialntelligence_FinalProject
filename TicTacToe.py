@@ -185,7 +185,7 @@ class TicTacToe:
         return possibleMoves
 
     #Move
-    def makeMove(self, currentPlayer, Agent1):
+    def makeMove(self, world, currentPlayer, Agent1):
         self.boardOptions()
         print("Current Player: " + currentPlayer)
 
@@ -198,8 +198,11 @@ class TicTacToe:
 
 
         if Agent1 != None:
-
-            move = Agent1.getMove(possibleMoves)
+            if Agent1.firstMove is None:
+                move = Agent1.getMove(world, possibleMoves, currentPlayer)
+            else:
+                move = Agent1.firstMove
+                Agent1.firstMove = None
 
         else:
 
@@ -218,7 +221,7 @@ class TicTacToe:
         i = (move-j)/3
         if self.grid[i][j].isEmpty == False:
             print("Move was invalid.")
-            return self.makeMove(currentPlayer, Agent1)
+            return self.makeMove(world,currentPlayer, Agent1)
         else:
             self.grid[i][j].val = currentPlayer
             self.grid[i][j].isEmpty = False
