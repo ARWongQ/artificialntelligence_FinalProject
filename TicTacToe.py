@@ -174,25 +174,35 @@ class TicTacToe:
         self.diagonalWinner()
 
 
+    #retunrs the possiblemoves for this board
+    def getPossibleMoves(self):
+        possibleMoves = []
+        for i in xrange(3):
+            for j in xrange(3):
+                node = self.grid[i][j]
+                if(node.isEmpty):
+                    possibleMoves.append(i*3 + j)
+        return possibleMoves
+
     #Move
     def makeMove(self, currentPlayer, Agent1):
         self.boardOptions()
         print("Current Player: " + currentPlayer)
 
+        #Get all the possible actions for the boards
+        possibleMoves = self.getPossibleMoves()
 
+        #if no actions return none
+        if(len(possibleMoves) == 0):
+            return None
 
 
         if Agent1 != None:
-            #Get all the possible actions for the boards
-            possibleMoves = []
-            for i in xrange(3):
-                for j in xrange(3):
-                    node = self.grid[i][j]
-                    if(node.isEmpty):
-                        possibleMoves.append(i*3 + j)
+
             move = Agent1.getMove(possibleMoves)
 
         else:
+
             move = raw_input("Enter the number of your next move:")
             try:
                 move = int(move)
@@ -220,6 +230,12 @@ class TicTacToe:
 
     #Print Board for Move
     def boardOptions(self):
+        #Don't print board options if there are no moves
+        if(len(self.getPossibleMoves()) == 0):
+            return
+
+        print("Available Spots: \n")
+
         string = ""
         for i in xrange(3):
             for j in xrange(3):

@@ -11,5 +11,11 @@ class randomAgent:
         i =random.randint(0,len(possibleMoves)-1)
         return possibleMoves[i]
 
+    #Returs a wanting boards
+    def getBoardMove(self, possibleBoards):
+
+        i = random.randint(0, len(possibleBoards)-1)
+        return possibleBoards[i]
+
 
 
