@@ -171,6 +171,11 @@ class UltimateTTT:
         #check diagonally
         self.diagonalWinner()
 
+
+    #checks the number of moves left in the Ultimate tic tac toe board
+    def moveNum(self):
+        pass
+
     #Move
     def move(self, Agent1):
         currentBoard = self.currentBoard
@@ -214,9 +219,19 @@ class UltimateTTT:
 
 
     #Plats Cpu v Cpu
-    def playThree(self, Agent1, Agent2):
-        for i in xrange(82):
+    def playThree(self, Agent1, Agent2, firstMove):
+        for i in xrange(81):
             if(i%2 == 0):
-                self.moveAgent(Agent1)
+                self.move(Agent1)
             else:
-                self.moveAgent(Agent2)
+                self.move(Agent2)
+
+            self.checkWinner()
+            if self.hasWon:
+                # self.displayBoard()
+                return self.wonBy
+
+        self.displayBoard()
+        print('No Winner!')
+        return None
+

@@ -9,7 +9,7 @@ def main():
 
     #myBoard.play()
 
-    myBoard.playTwo(rAgent)
+    myBoard.playThree(rAgent,rAgent,None)
 
 
 #Run the main function

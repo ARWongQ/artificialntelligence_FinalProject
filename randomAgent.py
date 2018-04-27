@@ -6,9 +6,9 @@ class randomAgent:
         self.name = "Random Agent"
 
     #Returns a random move between 0-8
-    def getMove(self, possibleMoves):
+    def getMove(self, possibleMoves, currentPlayer):
 
-        i =random.randint(0,len(possibleMoves))
+        i =random.randint(0,len(possibleMoves)-1)
         return possibleMoves[i]
 
 
