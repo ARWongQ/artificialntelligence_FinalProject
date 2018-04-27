@@ -160,6 +160,23 @@ class UltimateTTT:
 
 
 
+    #Check for tie
+    #Tie happens when all tic tac toe boards are taken and there is still no winner
+    def checkTie(self):
+        #Loop through all the tic tac toe boards and check if they all have a winner
+
+        for TTT in self.mainGrid:
+            #Check if not taken
+            if(TTT.hasWon == False):
+                return
+
+        #They all have been taken set as won (Terminal State)
+        if(self.hasWon):
+            return
+
+        print("There is TIE! ")
+        self.hasWon = True
+
 
 
     #checks if the Ultimate tic tac toe board has a winner
@@ -170,16 +187,92 @@ class UltimateTTT:
         self.verticalWinner()
         #check diagonally
         self.diagonalWinner()
+        #check for tie
+        self.checkTie()
+
+    #Prints available boards
+    def displayAvailableBoards(self):
+        print("Pick any avialable board")
+
+        string = ""
+        for i in xrange(3):
+            for j in xrange(3):
+                possibleMoves = self.mainGrid[i][j].getPossibleMoves()
+
+                if(len(possibleMoves) == 0):
+                    string += "N"
+
+                else:
+                    string += str(i*3 + j)
+
+                string += " |"
+
+
+                if(((i*3 + j)+1) % 3 == 0 and j != 0):
+                    string += "\n"
+
+        print string
+
+    #Lets the agent/user pick a board
+    def pickBoard(self,Agent, possibleBoards):
+        if(Agent == None):
+            #Print available shit to the user
+            self.displayAvailableBoards()
+            move = raw_input("Enter the number of your Board move:")
+            try:
+                move = int(move)
+            except ValueError:
+                print("Please enter a valid move number between 0 and 8.")
+                return self.pickBoard(Agent, possibleBoards)
+
+            if move < 0 or move > 8:
+                print("Move was invalid.")
+                return self.pickBoard(Agent, possibleBoards)
+
+            return move
+
+        else:
+            return Agent.getBoardMove(possibleBoards)
 
     #Move
     def move(self, Agent1):
         currentBoard = self.currentBoard
-        self.currentBoard = self.mainGrid[currentBoard[0]][currentBoard[1]].makeMove(self.currentPlayer, Agent1)
-        self.mainGrid[currentBoard[0]][currentBoard[1]].checkWinner()
-        if self.currentPlayer == 'X':
-            self.currentPlayer = 'O'
+
+        newBoard = self.mainGrid[currentBoard[0]][currentBoard[1]].makeMove(self.currentPlayer, Agent1)
+        while(newBoard == None):
+            possibleBoards = []
+            for i in xrange(3):
+                for j in xrange(3):
+                    possibleMoves = self.mainGrid[i][j].getPossibleMoves()
+                    #Check if no moves available
+                    if(len(possibleMoves) != 0):
+                        possibleBoards.append(i*3 + j)
+
+            #Gets the available boards
+            boardMove = self.pickBoard(Agent1, possibleBoards)
+
+
+
+            j = boardMove % 3
+            i = (boardMove-j)/3
+
+            currentBoard = [i,j]
+            TTT = self.mainGrid[currentBoard[0]][currentBoard[1]]
+            if(TTT != None):
+                print("New Selected Board is " + str(boardMove) + "\n")
+
+            newBoard = self.mainGrid[currentBoard[0]][currentBoard[1]].makeMove(self.currentPlayer, Agent1)
+
+
+
+
         else:
-            self.currentPlayer = 'X'
+            self.currentBoard = newBoard
+            self.mainGrid[currentBoard[0]][currentBoard[1]].checkWinner()
+            if self.currentPlayer == 'X':
+                self.currentPlayer = 'O'
+            else:
+                self.currentPlayer = 'X'
 
     #Plays Player v Player
     def play(self):
