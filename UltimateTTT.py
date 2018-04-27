@@ -9,6 +9,31 @@ class UltimateTTT:
         self.wonBy = ' '
         self.currentPlayer = 'X'
 
+    #Displays winners of the entire UTTT
+    def displayWinningBoards(self):
+        print("The board's result!")
+
+        string = ""
+        for i in xrange(3):
+            for j in xrange(3):
+
+                boardTTT = self.mainGrid[i][j]
+
+                if(boardTTT.hasWon):
+                    string += boardTTT.wonBy
+                else:
+                    string += "N"
+
+                string += " |"
+
+
+                if(((i*3 + j)+1) % 3 == 0 and j != 0):
+                    string += "\n"
+
+        print string
+
+
+
     #Displays the current board
     def displayBoard(self):
         str = ""
@@ -34,6 +59,8 @@ class UltimateTTT:
         self.hasWon = True
         self.wonBy = winner
         #Do something to stop the program!
+
+        self.displayWinningBoards()
 
     #Check for a winner in the horizontal lines
     def horizontalWinner(self):
@@ -165,10 +192,11 @@ class UltimateTTT:
     def checkTie(self):
         #Loop through all the tic tac toe boards and check if they all have a winner
 
-        for TTT in self.mainGrid:
-            #Check if not taken
-            if(TTT.hasWon == False):
-                return
+        for i in xrange(3):
+            for j in xrange(3):
+                #Check if not taken
+                if(self.mainGrid[i][j].hasWon == False):
+                    return
 
         #They all have been taken set as won (Terminal State)
         if(self.hasWon):
@@ -176,6 +204,7 @@ class UltimateTTT:
 
         print("There is TIE! ")
         self.hasWon = True
+        self.displayWinningBoards()
 
 
 
@@ -282,11 +311,7 @@ class UltimateTTT:
             self.checkWinner()
             if self.hasWon:
                 self.displayBoard()
-                return
-
-    #
-    def moveAgent(self):
-        pass
+                returnU
 
     #Plays Player v Cpu
     def playTwo(self, Agent1):
@@ -310,6 +335,6 @@ class UltimateTTT:
     def playThree(self, Agent1, Agent2):
         for i in xrange(82):
             if(i%2 == 0):
-                self.moveAgent(Agent1)
+                self.move(Agent1)
             else:
-                self.moveAgent(Agent2)
+                self.move(Agent2)
