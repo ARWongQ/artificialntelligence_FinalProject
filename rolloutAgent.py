@@ -13,7 +13,7 @@ class rolloutAgent:
     #Uses rollout to pick a next move
     def getMove(self, world, possibleMoves, currentPlayer):
         printInfo = 250
-        rolloutMultiplier = 1
+        rolloutMultiplier = 500
         #print(possibleMoves)
 
         #500 rollouts per move
@@ -24,7 +24,7 @@ class rolloutAgent:
         #Do everything randomly after the first move
         randAgent = randomAgent()
 
-        for i in xrange(1):
+        for i in xrange(rolloutNum):
             #Keep track on which move to update
             moveIdx = i%len(possibleMoves)
             firstMove = possibleMoves[moveIdx]
@@ -39,13 +39,12 @@ class rolloutAgent:
 
             #print every 250 moves
             if(i % printInfo == 0 and i != 0):
-                print("Finished #" + str(i) +  "rollout\n")
+                print("Finished #" + str(i) +  " rollout\n")
 
 
             if winner == currentPlayer:
                 wins[moveIdx] += 1
 
-        #Perform the move
         chosenMove = wins.index(max(wins))
         self.firstMove = None
 
