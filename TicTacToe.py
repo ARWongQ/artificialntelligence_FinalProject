@@ -6,7 +6,8 @@ class TicTacToe:
         self.grid = [[Node() for j in range(3)] for i in range(3)]
         self.hasWon = False
         self.wonBy = ''
-        self.verbose = 0
+        self.verbose = 1
+
 
     #Gets the line as a string for display
     def getLineString(self, lineNumb):
@@ -28,6 +29,9 @@ class TicTacToe:
         if self.hasWon:
             return
         #print("There is a winner! " + winner)
+        if self.verbose:
+            print("There is a winner! " + winner)
+
         self.hasWon = True
         self.wonBy = winner
 

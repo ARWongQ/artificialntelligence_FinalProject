@@ -8,9 +8,10 @@ class UltimateTTT:
         self.hasWon = False
         self.wonBy = ' '
         self.currentPlayer = 'X'
-        self.verbose = 0
+        self.verbose = 1
 
-    #Set verbose for UTTT and its boards
+
+    #Set verbose
     def setVerbose(self, verbose):
         self.verbose = verbose
         for i in xrange(3):
@@ -70,8 +71,6 @@ class UltimateTTT:
 
         self.hasWon = True
         self.wonBy = winner
-        #Do something to stop the program!
-
 
 
 
@@ -215,11 +214,10 @@ class UltimateTTT:
         if(self.hasWon):
             return
 
+        self.hasWon = True
         if self.verbose:
             print("There is TIE! ")
-
-        self.hasWon = True
-        self.displayWinningBoards()
+            self.displayWinningBoards()
 
 
     # Tie happens when all tic tac toe boards are taken and there is still no winner
@@ -375,6 +373,9 @@ class UltimateTTT:
     #Plats Cpu v Cpu
     def playThree(self, rAgent1, rAgent2):
         for i in xrange(81):
+            if self.verbose:
+                self.displayBoard()
+                
             if(i%2 == 0):
                 self.move(rAgent1)
             else:

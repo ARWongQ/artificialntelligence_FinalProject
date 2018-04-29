@@ -19,7 +19,6 @@ class rolloutAgent:
         #500 rollouts per move
         rolloutNum = len(possibleMoves) * rolloutMultiplier
 
-        #Store possible win ratio for each move
         wins = [0] * len(possibleMoves)
 
         #Do everything randomly after the first move
@@ -42,12 +41,14 @@ class rolloutAgent:
             if(i % printInfo == 0 and i != 0):
                 print("Finished #" + str(i) +  "rollout\n")
 
-            #If the rollout agent won add 1 to that possible move
+
             if winner == currentPlayer:
                 wins[moveIdx] += 1
 
         #Perform the move
         chosenMove = wins.index(max(wins))
+        self.firstMove = None
+
         return possibleMoves[chosenMove]
 
 
