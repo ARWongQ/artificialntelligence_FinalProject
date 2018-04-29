@@ -1,6 +1,7 @@
 import random
 import UltimateTTT
 import copy
+from TicTacToe import TicTacToe
 
 from randomAgent import randomAgent
 
@@ -20,13 +21,151 @@ class minimaxAgent:
 
 
     # function evaluates current state and chooses best move
-    def evalBoard(self,state):
+    def evalBoard(self,state,possibleMoves):
+
+        #define types of move
+        localBlock = 10
+        localSynergy = 3
+        localWin = 20
+        oppGetsOpenMove = -75
+        oppWinsGame = -250
+        youWinGame = 50000000
+        oppGetsToBlock = -20
+        oppGetsToBlockGlobal = -60
+
         bestmove = 0
-        poss_moves, poss_states = self.getMoves(state)
+        poss_moves, poss_states = self.getMoves(state) #poss_states is an UltimateTTT object, not just one TTT object
         move_points = [0]*len(poss_moves)
         for i, state in enumerate(poss_states):
             # evaluate state
-            pass
+            move_points[i] = 0
+            bestpoints = 0
+
+            #looking at     UTTT Board     mainboard       Y coord                      Xcoord
+            currentBoard = poss_states[i].mainGrid[poss_states[i].current_board[0]][poss_states[i].current_board[1]]
+
+            move_made = possibleMoves[i]
+
+            if move_made == 0: #top left move
+                my_symbol = currentBoard.grid[0][0].val
+                if my_symbol == 'X':
+                    their_symbol = 'O'
+                else:
+                    their_symbol = 'X'
+                # check to see if the move you made blocked the opponent locally
+                if (currentBoard.grid[1][0].val == their_symbol and currentBoard.grid[2][0].val == their_symbol) or (
+                        currentBoard.grid[0][1].val == their_symbol and currentBoard.grid[0][2].val == their_symbol) or (
+                        currentBoard.grid[1][1].val == their_symbol and currentBoard.grid[2][2].val == their_symbol):
+                    # blocked!
+                    move_points[i] += localBlock;
+
+            elif move_made == 1: #top mid move
+                my_symbol = currentBoard.grid[0][1].val
+                if my_symbol == 'X':
+                    their_symbol = 'O'
+                else:
+                    their_symbol = 'X'
+                # check to see if the move you made blocked the opponent locally
+                if (currentBoard.grid[1][1].val == their_symbol and currentBoard.grid[2][1].val == their_symbol) or (
+                        currentBoard.grid[0][0].val == their_symbol and currentBoard.grid[0][2].val == their_symbol):
+                    # blocked!
+                    move_points[i] += localBlock;
+
+            elif move_made == 2: #top right move
+                my_symbol = currentBoard.grid[0][2].val
+                if my_symbol == 'X':
+                    their_symbol = 'O'
+                else:
+                    their_symbol = 'X'
+                # check to see if the move you made blocked the opponent locally
+                if (currentBoard.grid[1][2].val == their_symbol and currentBoard.grid[2][2].val == their_symbol) or (
+                        currentBoard.grid[0][1].val == their_symbol and currentBoard.grid[0][0].val == their_symbol) or (
+                        currentBoard.grid[1][1].val == their_symbol and currentBoard.grid[2][0].val == their_symbol):
+                    # blocked!
+                    move_points[i] += localBlock;
+
+            elif move_made == 3: #mid left move
+                my_symbol = currentBoard.grid[1][0].val
+                if my_symbol == 'X':
+                    their_symbol = 'O'
+                else:
+                    their_symbol = 'X'
+                # check to see if the move you made blocked the opponent locally
+                if (currentBoard.grid[0][0].val == their_symbol and currentBoard.grid[2][0].val == their_symbol) or (
+                        currentBoard.grid[1][1].val == their_symbol and currentBoard.grid[1][2].val == their_symbol):
+                    # blocked!
+                    move_points[i] += localBlock;
+
+            elif move_made == 4: #mid mid move
+                my_symbol = currentBoard.grid[1][1].val
+                if my_symbol == 'X':
+                    their_symbol = 'O'
+                else:
+                    their_symbol = 'X'
+                # check to see if the move you made blocked the opponent locally
+                if (currentBoard.grid[0][0].val == their_symbol and currentBoard.grid[2][2].val == their_symbol) or (
+                        currentBoard.grid[2][0].val == their_symbol and currentBoard.grid[0][2].val == their_symbol) or (
+                        currentBoard.grid[1][0].val == their_symbol and currentBoard.grid[1][2].val == their_symbol) or (
+                        currentBoard.grid[0][1].val == their_symbol and currentBoard.grid[2][1].val == their_symbol):
+                    # blocked!
+                    move_points[i] += localBlock;
+
+            elif move_made == 5: #mid right move
+                my_symbol = currentBoard.grid[1][2].val
+                if my_symbol == 'X':
+                    their_symbol = 'O'
+                else:
+                    their_symbol = 'X'
+                # check to see if the move you made blocked the opponent locally
+                if (currentBoard.grid[0][2].val == their_symbol and currentBoard.grid[2][2].val == their_symbol) or (
+                        currentBoard.grid[1][1].val == their_symbol and currentBoard.grid[1][0].val == their_symbol):
+                    # blocked!
+                    move_points[i] += localBlock;
+
+            elif move_made == 6: #bot left move
+                my_symbol = currentBoard.grid[2][0].val
+                if my_symbol == 'X':
+                    their_symbol = 'O'
+                else:
+                    their_symbol = 'X'
+                # check to see if the move you made blocked the opponent locally
+                if (currentBoard.grid[1][0].val == their_symbol and currentBoard.grid[0][0].val == their_symbol) or (
+                        currentBoard.grid[2][1].val == their_symbol and currentBoard.grid[2][2].val == their_symbol) or (
+                        currentBoard.grid[1][1].val == their_symbol and currentBoard.grid[0][2].val == their_symbol):
+                    # blocked!
+                    move_points[i] += localBlock;
+
+            elif move_made == 7: #bot mid move
+                my_symbol = currentBoard.grid[2][1].val
+                if my_symbol == 'X':
+                    their_symbol = 'O'
+                else:
+                    their_symbol = 'X'
+                # check to see if the move you made blocked the opponent locally
+                if (currentBoard.grid[1][1].val == their_symbol and currentBoard.grid[0][1].val == their_symbol) or (
+                        currentBoard.grid[2][0].val == their_symbol and currentBoard.grid[2][2].val == their_symbol):
+                    # blocked!
+                    move_points[i] += localBlock;
+
+            elif move_made == 8: #bot right move
+                my_symbol = currentBoard.grid[2][2].val
+                if my_symbol == 'X':
+                    their_symbol = 'O'
+                else:
+                    their_symbol = 'X'
+                # check to see if the move you made blocked the opponent locally
+                if (currentBoard.grid[1][2].val == their_symbol and currentBoard.grid[0][2].val == their_symbol) or (
+                        currentBoard.grid[2][1].val == their_symbol and currentBoard.grid[2][0].val == their_symbol) or (
+                        currentBoard.grid[1][1].val == their_symbol and currentBoard.grid[0][0].val == their_symbol):
+                    # blocked!
+                    move_points[i] += localBlock;
+
+
+
+            if move_points[i] > bestpoints:
+                bestpoints = move_points[i]
+                bestmove = poss_moves[i]
+
         return bestmove
 
 
