@@ -207,6 +207,23 @@ class UltimateTTT:
         self.displayWinningBoards()
 
 
+    # Tie happens when all tic tac toe boards are taken and there is still no winner
+    def checkNoMoves(self):
+        # Loop through all the tic tac toe boards and check if they all have a winner
+
+        for i in xrange(3):
+            for j in xrange(3):
+                # Check if not taken
+                if (len(self.mainGrid[i][j].getPossibleMoves()) > 0):
+                    return
+
+        # They all have been taken set as won (Terminal State)
+        if (self.hasWon):
+            return
+
+        print("There is TIE! ")
+        self.hasWon = True
+
 
     #checks if the Ultimate tic tac toe board has a winner
     def checkWinner(self):
@@ -218,6 +235,8 @@ class UltimateTTT:
         self.diagonalWinner()
         #check for tie
         self.checkTie()
+        #check for no more available moves
+        self.checkNoMoves()
 
     #Prints available boards
     def displayAvailableBoards(self):
@@ -263,11 +282,13 @@ class UltimateTTT:
         else:
             return Agent.getBoardMove(possibleBoards)
 
+
+
     #Move
     def move(self, Agent1):
         currentBoard = self.currentBoard
 
-        newBoard = self.mainGrid[currentBoard[0]][currentBoard[1]].makeMove(self.currentPlayer, Agent1)
+        newBoard = self.mainGrid[currentBoard[0]][currentBoard[1]].makeMove(self,self.currentPlayer, Agent1)
         while(newBoard == None):
             possibleBoards = []
             for i in xrange(3):
@@ -290,7 +311,7 @@ class UltimateTTT:
             if(TTT != None):
                 print("New Selected Board is " + str(boardMove) + "\n")
 
-            newBoard = self.mainGrid[currentBoard[0]][currentBoard[1]].makeMove(self.currentPlayer, Agent1)
+            newBoard = self.mainGrid[currentBoard[0]][currentBoard[1]].makeMove(self,self.currentPlayer, Agent1)
 
 
 
@@ -331,9 +352,19 @@ class UltimateTTT:
 
 
     #Plats Cpu v Cpu
-    def playThree(self, Agent1, Agent2):
-        for i in xrange(82):
+    def playThree(self, rAgent1, rAgent2):
+        for i in xrange(81):
             if(i%2 == 0):
-                self.move(Agent1)
+                self.move(rAgent1)
             else:
-                self.move(Agent2)
+                self.move(rAgent2)
+
+            self.checkWinner()
+            if self.hasWon:
+                # self.displayBoard()
+                return self.wonBy
+
+        self.displayBoard()
+        print('No Winner!')
+        return None
+

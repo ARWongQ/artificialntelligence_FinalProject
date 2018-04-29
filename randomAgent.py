@@ -4,18 +4,23 @@ import random
 class randomAgent:
     def __init__(self):
         self.name = "Random Agent"
+        self.firstMove = None
 
     #Returns a random move between 0-8
-    def getMove(self, possibleMoves):
-
-        i =random.randint(0,len(possibleMoves)-1)
-        return possibleMoves[i]
+    def getMove(self, world, possibleMoves, currentPlayer):
+        if len(possibleMoves) == 1:
+            return possibleMoves[0]
+        else:
+            i =random.randint(0,len(possibleMoves)-1)
+            return possibleMoves[i]
 
     #Returs a wanting boards
     def getBoardMove(self, possibleBoards):
-
-        i = random.randint(0, len(possibleBoards)-1)
-        return possibleBoards[i]
+        if len(possibleBoards) == 1:
+            return possibleBoards[0]
+        else:
+            i =random.randint(0,len(possibleBoards)-1)
+            return possibleBoards[i]
 
 
 
