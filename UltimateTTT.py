@@ -311,7 +311,7 @@ class UltimateTTT:
             self.checkWinner()
             if self.hasWon:
                 self.displayBoard()
-                returnU
+                return
 
     #Plays Player v Cpu
     def playTwo(self, Agent1):
@@ -328,7 +328,6 @@ class UltimateTTT:
             if self.hasWon:
                 self.displayBoard()
                 return
-
 
 
     #Plats Cpu v Cpu
