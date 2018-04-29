@@ -10,8 +10,22 @@ def main():
     rollAgent = rolloutAgent()
 
     #myBoard.play()
-    #myBoard.playTwo()
-    myBoard.playThree(rollAgent,rAgent)
+
+    numGames = 100
+    wins = [0, 0, 0]
+
+    for i in xrange(numGames):
+        print('Game ' + str(i))
+        myBoard.playThree(rollAgent,rAgent)
+        if myBoard.wonBy == 'X':
+            wins[0] += 1
+        elif myBoard.wonBy == 'O':
+            wins[1] += 1
+        else:
+            wins[2] += 1
+
+    print('Rollout Agent won ' + str(wins[0]) + ' times.\nRandom Agent won ' + str(wins[1]) + ' times.\nTied won ' + str(wins[2]) + ' times.\n')
+
     # myBoard.playTwo(rollAgent)
 
 #Run the main function

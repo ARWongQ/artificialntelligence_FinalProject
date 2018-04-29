@@ -372,10 +372,11 @@ class UltimateTTT:
 
     #Plats Cpu v Cpu
     def playThree(self, rAgent1, rAgent2):
+        self.setVerbose(0)
         for i in xrange(81):
             if self.verbose:
                 self.displayBoard()
-                
+
             if(i%2 == 0):
                 self.move(rAgent1)
             else:
@@ -383,7 +384,8 @@ class UltimateTTT:
 
             self.checkWinner()
             if self.hasWon:
-                # self.displayBoard()
+                if rAgent1.name == 'Rollout Agent':
+                    self.displayWinningBoards()
                 return self.wonBy
 
         if self.verbose:
