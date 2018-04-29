@@ -22,9 +22,13 @@ class minimaxAgent:
     # function evaluates current state and chooses best move
     def evalBoard(self,state):
         bestmove = 0
-        pass
+        poss_moves, poss_states = self.getMoves(state)
+        move_points = [0]*len(poss_moves)
+        for i, state in enumerate(poss_states):
+            # evaluate state
+            pass
         return bestmove
-    
+
 
     # function performs 'min' action - chooses best move of opponent and returns score
     def minEval(self,state):
@@ -35,7 +39,7 @@ class minimaxAgent:
             max_points = self.evalBoard(state)
             if max_points < min_points:
                 min_points = max_points
-                min_move = i
+                min_move = poss_moves[i]
         return min_move
 
 
