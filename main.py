@@ -12,7 +12,7 @@ def main():
     #myBoard.play()
 
     myBoard.playThree(rollAgent,rAgent)
-
+    # myBoard.playTwo(rollAgent)
 
 #Run the main function
 if __name__ == "__main__":
