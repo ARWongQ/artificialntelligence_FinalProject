@@ -8,6 +8,14 @@ class UltimateTTT:
         self.hasWon = False
         self.wonBy = ' '
         self.currentPlayer = 'X'
+        self.verbose = 0
+
+    #Set verbose for UTTT and its boards
+    def setVerbose(self, verbose):
+        self.verbose = verbose
+        for i in xrange(3):
+            for j in xrange(3):
+                self.mainGrid[i][j].verbose = verbose
 
     #Displays winners of the entire UTTT
     def displayWinningBoards(self):
@@ -55,12 +63,17 @@ class UltimateTTT:
     def setWinner(self, winner):
         if(self.hasWon):
             return
-        print("The Ultimate Tic Tac Toe Winner is " + winner)
+
+        if self.verbose:
+            print("The Ultimate Tic Tac Toe Winner is " + winner)
+            self.displayWinningBoards()
+
         self.hasWon = True
         self.wonBy = winner
         #Do something to stop the program!
 
-        self.displayWinningBoards()
+
+
 
     #Check for a winner in the horizontal lines
     def horizontalWinner(self):
@@ -202,7 +215,9 @@ class UltimateTTT:
         if(self.hasWon):
             return
 
-        print("There is TIE! ")
+        if self.verbose:
+            print("There is TIE! ")
+
         self.hasWon = True
         self.displayWinningBoards()
 
@@ -221,7 +236,8 @@ class UltimateTTT:
         if (self.hasWon):
             return
 
-        print("There is TIE! ")
+        if self.verbose:
+            print("There is TIE! ")
         self.hasWon = True
 
 
@@ -309,7 +325,8 @@ class UltimateTTT:
             currentBoard = [i,j]
             TTT = self.mainGrid[currentBoard[0]][currentBoard[1]]
             if(TTT != None):
-                print("New Selected Board is " + str(boardMove) + "\n")
+                if self.verbose:
+                    print("New Selected Board is " + str(boardMove) + "\n")
 
             newBoard = self.mainGrid[currentBoard[0]][currentBoard[1]].makeMove(self,self.currentPlayer, Agent1)
 
@@ -327,7 +344,10 @@ class UltimateTTT:
     #Plays Player v Player
     def play(self):
         for i in xrange(82):
-            self.displayBoard()
+            #Check to display information
+            if(self.verbose == 1):
+                self.displayBoard()
+
             self.move(None)
             self.checkWinner()
             if self.hasWon:
@@ -337,6 +357,7 @@ class UltimateTTT:
     #Plays Player v Cpu
     def playTwo(self, Agent1):
         for i in xrange(82):
+            #Check to display information
             self.displayBoard()
 
             if(i%2 == 0):
@@ -364,7 +385,8 @@ class UltimateTTT:
                 # self.displayBoard()
                 return self.wonBy
 
-        self.displayBoard()
-        print('No Winner!')
+        if self.verbose:
+            self.displayBoard()
+            print('No Winner!')
         return None
 

@@ -6,6 +6,7 @@ class TicTacToe:
         self.grid = [[Node() for j in range(3)] for i in range(3)]
         self.hasWon = False
         self.wonBy = ''
+        self.verbose = 0
 
     #Gets the line as a string for display
     def getLineString(self, lineNumb):
@@ -26,7 +27,7 @@ class TicTacToe:
         #Don't do anything if this board has a winner
         if self.hasWon:
             return
-        print("There is a winner! " + winner)
+        #print("There is a winner! " + winner)
         self.hasWon = True
         self.wonBy = winner
 
@@ -186,8 +187,9 @@ class TicTacToe:
 
     #Move
     def makeMove(self, world, currentPlayer, Agent1):
-        self.boardOptions()
-        print("Current Player: " + currentPlayer)
+        if self.verbose:
+            self.boardOptions()
+            print("Current Player: " + currentPlayer)
 
         #Get all the possible actions for the boards
         possibleMoves = self.getPossibleMoves()
@@ -221,12 +223,15 @@ class TicTacToe:
         i = (move-j)/3
         if self.grid[i][j].isEmpty == False:
             print("Move was invalid.")
+            #print("The move was " + str(move))
+            #print("I= " + str(i) + " J=" + str(j) )
             return self.makeMove(world,currentPlayer, Agent1)
         else:
             self.grid[i][j].val = currentPlayer
             self.grid[i][j].isEmpty = False
 
-            print("Move " + str(move))
+            if self.verbose:
+                print("Move " + str(move))
             return [i, j]
 
 

@@ -12,29 +12,48 @@ class rolloutAgent:
 
     #Uses rollout to pick a next move
     def getMove(self, world, possibleMoves, currentPlayer):
-        rolloutNum = len(possibleMoves)
+        printInfo = 250
+        rolloutMultiplier = 1
+        #print(possibleMoves)
+
+        #500 rollouts per move
+        rolloutNum = len(possibleMoves) * rolloutMultiplier
+
+        #Store possible win ratio for each move
         wins = [0] * len(possibleMoves)
+
+        #Do everything randomly after the first move
         randAgent = randomAgent()
 
-        for i in xrange(rolloutNum):
+        for i in xrange(1):
+            #Keep track on which move to update
             moveIdx = i%len(possibleMoves)
             firstMove = possibleMoves[moveIdx]
             self.firstMove = firstMove
 
+            #Perform a random game on this UTTT board
             worldCopy = copy.deepcopy(world)
+            worldCopy.setVerbose(0)
 
+            #After the game ended check who was the winner!
             winner = worldCopy.playThree(randAgent, randAgent)
-            print('Finished one rollout\n')
+
+            #print every 250 moves
+            if(i % printInfo == 0 and i != 0):
+                print("Finished #" + str(i) +  "rollout\n")
+
+            #If the rollout agent won add 1 to that possible move
             if winner == currentPlayer:
                 wins[moveIdx] += 1
 
+        #Perform the move
         chosenMove = wins.index(max(wins))
+        return possibleMoves[chosenMove]
 
-        return chosenMove
 
-
-    #Returs a wanting boards
+    #Returns a wanting boards
     def getBoardMove(self, possibleBoards):
+        #pick a board
         if len(possibleBoards) == 1:
             return possibleBoards[0]
         else:

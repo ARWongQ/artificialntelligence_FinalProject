@@ -10,7 +10,7 @@ def main():
     rollAgent = rolloutAgent()
 
     #myBoard.play()
-
+    #myBoard.playTwo()
     myBoard.playThree(rollAgent,rAgent)
 
 
