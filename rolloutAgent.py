@@ -56,7 +56,7 @@ class rolloutAgent:
 
         chosenMove = wins.index(max(wins))
         self.firstMove = None
-m 
+
         return possibleMoves[chosenMove]
 
 
