@@ -1,4 +1,5 @@
 from TicTacToe import TicTacToe
+import random
 
 #Holds the entire information
 class UltimateTTT:
