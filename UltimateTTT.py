@@ -289,7 +289,12 @@ class UltimateTTT:
                 return self.pickBoard(Agent, possibleBoards)
 
             return move
-
+        elif Agent == 0 or Agent == 1 or Agent == 2 or Agent == 3 or Agent == 4 or Agent == 5 or Agent == 6 or Agent == 7 or Agent == 8:
+            if len(possibleBoards) == 1:
+                return possibleBoards[0]
+            else:
+                i = random.randint(0, len(possibleBoards) - 1)
+                return possibleBoards[i]
         else:
             return Agent.getBoardMove(possibleBoards)
 
