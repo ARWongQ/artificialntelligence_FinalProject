@@ -12,8 +12,9 @@ class rolloutAgent:
 
     #Uses rollout to pick a next move
     def getMove(self, world, possibleMoves, currentPlayer):
-        printInfo = 250
-        rolloutMultiplier = 500
+
+        rolloutMultiplier = 1000
+        printInfo = 1000
         #print(possibleMoves)
 
         #500 rollouts per move
@@ -38,12 +39,20 @@ class rolloutAgent:
             winner = worldCopy.playThree(randAgent, randAgent)
 
             #print every 250 moves
-            if(i % printInfo == 0 and i != 0):
-                print("Finished #" + str(i) +  " rollout\n")
+            # if(i % printInfo == 0 and i != 0):
+            #     print("Finished #" + str(i) +  " rollout\n")
 
+            #Utility function
+            if(worldCopy.wonBy == currentPlayer):
+                wins[moveIdx] += 20
 
-            if winner == currentPlayer:
-                wins[moveIdx] += 1
+            for i in xrange(3):
+                for j in xrange(3):
+                    TTTBoard =worldCopy.mainGrid[i][j]
+                    if(TTTBoard.wonBy == currentPlayer):
+                        wins[moveIdx] += 1
+                    elif(TTTBoard.wonBy == 'O'):
+                        wins[moveIdx] -= 0.5
 
         chosenMove = wins.index(max(wins))
         self.firstMove = None
