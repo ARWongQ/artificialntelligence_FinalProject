@@ -1,4 +1,5 @@
 from Node import Node
+import copy
 
 #Holds the information for simple tic tac toe
 class TicTacToe:
@@ -7,6 +8,7 @@ class TicTacToe:
         self.hasWon = False
         self.wonBy = ''
         self.verbose = 1
+
 
     #Gets the line as a string for display
     def getLineString(self, lineNumb):
@@ -27,8 +29,10 @@ class TicTacToe:
         #Don't do anything if this board has a winner
         if self.hasWon:
             return
+        #print("There is a winner! " + winner)
         if self.verbose:
             print("There is a winner! " + winner)
+
         self.hasWon = True
         self.wonBy = winner
 
@@ -186,6 +190,7 @@ class TicTacToe:
                     possibleMoves.append(i*3 + j)
         return possibleMoves
 
+
     #Move
     def makeMove(self, world, currentPlayer, Agent1):
         if self.verbose:
@@ -195,13 +200,16 @@ class TicTacToe:
         #Get all the possible actions for the boards
         possibleMoves = self.getPossibleMoves()
 
+
         #if no actions return none
         if(len(possibleMoves) == 0):
             return None
 
 
         if Agent1 != None:
-            if Agent1.firstMove is None:
+            if Agent1 == 0 or Agent1 == 1 or Agent1 == 2 or Agent1 == 3 or Agent1 == 4 or Agent1 == 5 or Agent1 == 6 or Agent1 == 7 or Agent1 == 8:
+                move = Agent1
+            elif Agent1.firstMove is None:
                 move = Agent1.getMove(world, possibleMoves, currentPlayer)
             else:
                 move = Agent1.firstMove

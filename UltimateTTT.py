@@ -10,6 +10,8 @@ class UltimateTTT:
         self.currentPlayer = 'X'
         self.verbose = 1
 
+
+    #Set verbose
     def setVerbose(self, verbose):
         self.verbose = verbose
         for i in xrange(3):
@@ -62,12 +64,13 @@ class UltimateTTT:
     def setWinner(self, winner):
         if(self.hasWon):
             return
+
         if self.verbose:
             print("The Ultimate Tic Tac Toe Winner is " + winner)
             self.displayWinningBoards()
+
         self.hasWon = True
         self.wonBy = winner
-        #Do something to stop the program!
 
 
 
@@ -313,7 +316,6 @@ class UltimateTTT:
             boardMove = self.pickBoard(Agent1, possibleBoards)
 
 
-
             j = boardMove % 3
             i = (boardMove-j)/3
 
@@ -339,7 +341,10 @@ class UltimateTTT:
     #Plays Player v Player
     def play(self):
         for i in xrange(82):
-            self.displayBoard()
+            #Check to display information
+            if(self.verbose == 1):
+                self.displayBoard()
+
             self.move(None)
             self.checkWinner()
             if self.hasWon:
@@ -349,6 +354,7 @@ class UltimateTTT:
     #Plays Player v Cpu
     def playTwo(self, Agent1):
         for i in xrange(82):
+            #Check to display information
             self.displayBoard()
 
             if(i%2 == 0):
@@ -379,6 +385,29 @@ class UltimateTTT:
             self.checkWinner()
             if self.hasWon:
                 if rAgent1.name == 'Rollout Agent':
+                    self.displayWinningBoards()
+                return self.wonBy
+
+        if self.verbose:
+            self.displayBoard()
+            print('No Winner!')
+        return None
+
+    #Plays Cpu v Cpu
+    def playFour(self, rAgent1, rAgent2):
+        self.setVerbose(0)
+        for i in xrange(81):
+            if self.verbose:
+                self.displayBoard()
+
+            if(i%2 == 0):
+                self.move(rAgent1)
+            else:
+                self.move(rAgent2)
+
+            self.checkWinner()
+            if self.hasWon:
+                if rAgent1.name == 'Minimax Agent':
                     self.displayWinningBoards()
                 return self.wonBy
 
