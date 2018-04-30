@@ -13,13 +13,12 @@ def main():
 
     #myBoard.play()
 
-    numGames = 10
+    numGames = 80
     wins = [0, 0, 0]
 
 
 
     # ROLLOUT AGENT
-    """
     for i in xrange(numGames):
         myBoard = UltimateTTT()
         print('Game ' + str(i))
@@ -34,7 +33,7 @@ def main():
         print('Rollout Agent won ' + str(wins[0]) + ' times.\nRandom Agent won ' + str(wins[1]) + ' times.\nTied won ' + str(wins[2]) + ' times.\n')
 
     # myBoard.playTwo(rollAgent)
-    """
+
 
 
     # MINIMAX AGENT

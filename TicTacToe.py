@@ -231,7 +231,7 @@ class TicTacToe:
         j = move % 3
         i = (move-j)/3
         if self.grid[i][j].isEmpty == False:
-            print("Move was invalid.")
+            #print("Move was invalid.")
             #print("The move was " + str(move))
             #print("I= " + str(i) + " J=" + str(j) )
             return self.makeMove(world,currentPlayer, Agent1)
