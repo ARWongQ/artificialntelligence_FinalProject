@@ -1,7 +1,5 @@
 import random
-import UltimateTTT
 import copy
-from TicTacToe import TicTacToe
 
 
 #This class holds the information of an agent that uses minimax
@@ -27,6 +25,7 @@ class minimaxAgent:
             #state.displayBoard()
 
         return (active_boards, states)
+
 
     # function evaluates current state and returns highest point return
     def evalBoard(self,state):
@@ -404,6 +403,7 @@ class minimaxAgent:
                 min_move = possibleMoves[i]
         return min_points
 
+
     # function performs minimax algorithm
     def minimax(self, curr_state, possibleMoves):
         active_boards, poss_states = self.getMoves(curr_state, possibleMoves)
@@ -416,9 +416,11 @@ class minimaxAgent:
                 best_move = possibleMoves[i]
         return best_move
 
+
     # getMove - use minimax
     def getMove(self, world, possibleMoves, currentPlayer):
         return self.minimax(world, possibleMoves)
+
 
     # getBoardMove - full board - choose a board
     def getBoardMove(self, possibleBoards):
