@@ -313,7 +313,6 @@ class UltimateTTT:
             boardMove = self.pickBoard(Agent1, possibleBoards)
 
 
-
             j = boardMove % 3
             i = (boardMove-j)/3
 
