@@ -9,6 +9,7 @@ class TicTacToe:
         self.wonBy = ''
         self.verbose = 1
 
+
     #Gets the line as a string for display
     def getLineString(self, lineNumb):
         str = ""
@@ -28,8 +29,10 @@ class TicTacToe:
         #Don't do anything if this board has a winner
         if self.hasWon:
             return
+        #print("There is a winner! " + winner)
         if self.verbose:
             print("There is a winner! " + winner)
+
         self.hasWon = True
         self.wonBy = winner
 
@@ -228,7 +231,8 @@ class TicTacToe:
         j = move % 3
         i = (move-j)/3
         if self.grid[i][j].isEmpty == False:
-            print("Move was invalid.")
+            if self.verbose:
+                print("Move was invalid.")
             return self.makeMove(world,currentPlayer, Agent1)
         else:
             self.grid[i][j].val = currentPlayer

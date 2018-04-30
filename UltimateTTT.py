@@ -10,6 +10,8 @@ class UltimateTTT:
         self.currentPlayer = 'X'
         self.verbose = 1
 
+
+    #Set verbose
     def setVerbose(self, verbose):
         self.verbose = verbose
         for i in xrange(3):
@@ -62,12 +64,13 @@ class UltimateTTT:
     def setWinner(self, winner):
         if(self.hasWon):
             return
+
         if self.verbose:
             print("The Ultimate Tic Tac Toe Winner is " + winner)
             self.displayWinningBoards()
+
         self.hasWon = True
         self.wonBy = winner
-        #Do something to stop the program!
 
 
 
@@ -343,7 +346,10 @@ class UltimateTTT:
     #Plays Player v Player
     def play(self):
         for i in xrange(82):
-            self.displayBoard()
+            #Check to display information
+            if(self.verbose == 1):
+                self.displayBoard()
+
             self.move(None)
             self.checkWinner()
             if self.hasWon:
@@ -353,6 +359,7 @@ class UltimateTTT:
     #Plays Player v Cpu
     def playTwo(self, Agent1):
         for i in xrange(82):
+            #Check to display information
             self.displayBoard()
 
             if(i%2 == 0):
@@ -368,7 +375,7 @@ class UltimateTTT:
 
 
 
-    #Plays Cpu v Cpu
+    #Plats Cpu v Cpu
     def playThree(self, rAgent1, rAgent2):
         self.setVerbose(0)
         for i in xrange(81):
