@@ -8,7 +8,7 @@ from TicTacToe import TicTacToe
 class minimaxAgent:
     def __init__(self):
         self.name = "Minimax Agent"
-        self.firstMove = None
+        self.firstMove = 4
 
 
     # function returns list of possible next states and active boards
@@ -278,7 +278,7 @@ class minimaxAgent:
             #check opponent's next move assuming greed (they WILL win the next board or block you if possible)
             oppMovesList = oppBoard.getPossibleMoves()
             if len(oppMovesList) == 0: #opponent was given an open move
-                move_points += oppGetsOpenMove
+                move_points[i] += oppGetsOpenMove
 
             for k in range (len(oppMovesList)): #go through all possible opponent next moves
                 oppMove = oppMovesList[k]
@@ -385,8 +385,8 @@ class minimaxAgent:
                 bestpoints = move_points[i]
                 bestmove = possibleMoves[i]
 
-        for x,points in enumerate(move_points):
-            print x," points = ",points
+        #for x,points in enumerate(move_points):
+            #print x," points = ",points
 
         return bestpoints
 
@@ -417,10 +417,14 @@ class minimaxAgent:
         return best_move
 
     # getMove - use minimax
-    def getMove(self, world, possibleMoves):
-        self.minimax(world, possibleMoves)
+    def getMove(self, world, possibleMoves, currentPlayer):
+        return self.minimax(world, possibleMoves)
 
     # getBoardMove - full board - choose a board
     def getBoardMove(self, possibleBoards):
-        pass
+        if len(possibleBoards) == 1:
+            return possibleBoards[0]
+        else:
+            i = random.randint(0, len(possibleBoards) - 1)
+            return possibleBoards[i]
 

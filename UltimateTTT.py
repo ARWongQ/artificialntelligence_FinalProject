@@ -364,7 +364,7 @@ class UltimateTTT:
 
 
 
-    #Plats Cpu v Cpu
+    #Plays Cpu v Cpu
     def playThree(self, rAgent1, rAgent2):
         self.setVerbose(0)
         for i in xrange(81):
@@ -379,6 +379,29 @@ class UltimateTTT:
             self.checkWinner()
             if self.hasWon:
                 if rAgent1.name == 'Rollout Agent':
+                    self.displayWinningBoards()
+                return self.wonBy
+
+        if self.verbose:
+            self.displayBoard()
+            print('No Winner!')
+        return None
+
+    #Plays Cpu v Cpu
+    def playFour(self, rAgent1, rAgent2):
+        self.setVerbose(0)
+        for i in xrange(81):
+            if self.verbose:
+                self.displayBoard()
+
+            if(i%2 == 0):
+                self.move(rAgent1)
+            else:
+                self.move(rAgent2)
+
+            self.checkWinner()
+            if self.hasWon:
+                if rAgent1.name == 'Minimax Agent':
                     self.displayWinningBoards()
                 return self.wonBy
 
