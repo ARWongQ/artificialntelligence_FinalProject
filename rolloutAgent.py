@@ -12,25 +12,26 @@ class rolloutAgent:
 
     #Uses rollout to pick a next move
     def getMove(self, world, possibleMoves, currentPlayer):
-        rolloutNum = len(possibleMoves)*500
+        rolloutNum = len(possibleMoves)*50
         wins = [0] * len(possibleMoves)
         randAgent = randomAgent()
+        randAgent2 = randomAgent()
 
         for i in xrange(rolloutNum):
             moveIdx = i%len(possibleMoves)
             firstMove = possibleMoves[moveIdx]
-            self.firstMove = firstMove
+            randAgent.firstMove = firstMove
 
             worldCopy = copy.deepcopy(world)
             worldCopy.setVerbose(0)
 
-            winner = worldCopy.playThree(randAgent, randAgent)
+            winner = worldCopy.playThree(randAgent, randAgent2)
             # print('Finished one rollout\n')
             if winner == currentPlayer:
                 wins[moveIdx] += 1
 
         chosenMove = wins.index(max(wins))
-        self.firstMove = None
+        # self.firstMove = None
 
         return possibleMoves[chosenMove]
 
