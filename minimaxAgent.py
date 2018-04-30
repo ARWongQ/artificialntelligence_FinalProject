@@ -23,10 +23,10 @@ class minimaxAgent:
     # function evaluates current state and chooses best move
     def evalBoard(self,state,possibleMoves):
 
-        #define types of move
+        #define types of move. If a board is already won/lost, do not consider Block, Synergy, or Win in eval
         localBlock = 10
-        localSynergy = 3
-        localWin = 20
+        localSynergy = 5
+        localWin = 20 #a local win will always also award synergy points
         oppGetsOpenMove = -75
         oppWinsGame = -250
         youWinGame = 50000000
@@ -57,7 +57,13 @@ class minimaxAgent:
                         currentBoard.grid[0][1].val == their_symbol and currentBoard.grid[0][2].val == their_symbol) or (
                         currentBoard.grid[1][1].val == their_symbol and currentBoard.grid[2][2].val == their_symbol):
                     # blocked!
-                    move_points[i] += localBlock;
+                    move_points[i] += localBlock
+                #check for local win
+                if (currentBoard.grid[1][0].val == my_symbol and currentBoard.grid[2][0].val == my_symbol) or (
+                        currentBoard.grid[0][1].val == my_symbol and currentBoard.grid[0][2].val == my_symbol) or (
+                        currentBoard.grid[1][1].val == my_symbol and currentBoard.grid[2][2].val == my_symbol):
+                    # blocked!
+                    move_points[i] += localWin
 
             elif move_made == 1: #top mid move
                 my_symbol = currentBoard.grid[0][1].val
@@ -69,7 +75,12 @@ class minimaxAgent:
                 if (currentBoard.grid[1][1].val == their_symbol and currentBoard.grid[2][1].val == their_symbol) or (
                         currentBoard.grid[0][0].val == their_symbol and currentBoard.grid[0][2].val == their_symbol):
                     # blocked!
-                    move_points[i] += localBlock;
+                    move_points[i] += localBlock
+                #check for local win
+                if (currentBoard.grid[1][1].val == my_symbol and currentBoard.grid[2][1].val == my_symbol) or (
+                        currentBoard.grid[0][0].val == my_symbol and currentBoard.grid[0][2].val == my_symbol):
+                    # blocked!
+                    move_points[i] += localWin
 
             elif move_made == 2: #top right move
                 my_symbol = currentBoard.grid[0][2].val
@@ -82,7 +93,13 @@ class minimaxAgent:
                         currentBoard.grid[0][1].val == their_symbol and currentBoard.grid[0][0].val == their_symbol) or (
                         currentBoard.grid[1][1].val == their_symbol and currentBoard.grid[2][0].val == their_symbol):
                     # blocked!
-                    move_points[i] += localBlock;
+                    move_points[i] += localBlock
+                #check for local win
+                if (currentBoard.grid[1][2].val == my_symbol and currentBoard.grid[2][2].val == my_symbol) or (
+                        currentBoard.grid[0][1].val == my_symbol and currentBoard.grid[0][0].val == my_symbol) or (
+                        currentBoard.grid[1][1].val == my_symbol and currentBoard.grid[2][0].val == my_symbol):
+                    # blocked!
+                    move_points[i] += localWin
 
             elif move_made == 3: #mid left move
                 my_symbol = currentBoard.grid[1][0].val
@@ -94,7 +111,12 @@ class minimaxAgent:
                 if (currentBoard.grid[0][0].val == their_symbol and currentBoard.grid[2][0].val == their_symbol) or (
                         currentBoard.grid[1][1].val == their_symbol and currentBoard.grid[1][2].val == their_symbol):
                     # blocked!
-                    move_points[i] += localBlock;
+                    move_points[i] += localBlock
+                #check for local Win
+                if (currentBoard.grid[0][0].val == my_symbol and currentBoard.grid[2][0].val == my_symbol) or (
+                        currentBoard.grid[1][1].val == my_symbol and currentBoard.grid[1][2].val == my_symbol):
+                    # blocked!
+                    move_points[i] += localWin
 
             elif move_made == 4: #mid mid move
                 my_symbol = currentBoard.grid[1][1].val
@@ -108,7 +130,14 @@ class minimaxAgent:
                         currentBoard.grid[1][0].val == their_symbol and currentBoard.grid[1][2].val == their_symbol) or (
                         currentBoard.grid[0][1].val == their_symbol and currentBoard.grid[2][1].val == their_symbol):
                     # blocked!
-                    move_points[i] += localBlock;
+                    move_points[i] += localBlock
+                #check for Local Win
+                if (currentBoard.grid[0][0].val == my_symbol and currentBoard.grid[2][2].val == my_symbol) or (
+                        currentBoard.grid[2][0].val == my_symbol and currentBoard.grid[0][2].val == my_symbol) or (
+                        currentBoard.grid[1][0].val == my_symbol and currentBoard.grid[1][2].val == my_symbol) or (
+                        currentBoard.grid[0][1].val == my_symbol and currentBoard.grid[2][1].val == my_symbol):
+                    # blocked!
+                    move_points[i] += localWin
 
             elif move_made == 5: #mid right move
                 my_symbol = currentBoard.grid[1][2].val
@@ -120,7 +149,12 @@ class minimaxAgent:
                 if (currentBoard.grid[0][2].val == their_symbol and currentBoard.grid[2][2].val == their_symbol) or (
                         currentBoard.grid[1][1].val == their_symbol and currentBoard.grid[1][0].val == their_symbol):
                     # blocked!
-                    move_points[i] += localBlock;
+                    move_points[i] += localBlock
+                #check for local win
+                if (currentBoard.grid[0][2].val == my_symbol and currentBoard.grid[2][2].val == my_symbol) or (
+                        currentBoard.grid[1][1].val == my_symbol and currentBoard.grid[1][0].val == my_symbol):
+                    # blocked!
+                    move_points[i] += localWin
 
             elif move_made == 6: #bot left move
                 my_symbol = currentBoard.grid[2][0].val
@@ -133,7 +167,13 @@ class minimaxAgent:
                         currentBoard.grid[2][1].val == their_symbol and currentBoard.grid[2][2].val == their_symbol) or (
                         currentBoard.grid[1][1].val == their_symbol and currentBoard.grid[0][2].val == their_symbol):
                     # blocked!
-                    move_points[i] += localBlock;
+                    move_points[i] += localBlock
+                #check for local win
+                if (currentBoard.grid[1][0].val == my_symbol and currentBoard.grid[0][0].val == my_symbol) or (
+                        currentBoard.grid[2][1].val == my_symbol and currentBoard.grid[2][2].val == my_symbol) or (
+                        currentBoard.grid[1][1].val == my_symbol and currentBoard.grid[0][2].val == my_symbol):
+                    # blocked!
+                    move_points[i] += localWin
 
             elif move_made == 7: #bot mid move
                 my_symbol = currentBoard.grid[2][1].val
@@ -145,7 +185,12 @@ class minimaxAgent:
                 if (currentBoard.grid[1][1].val == their_symbol and currentBoard.grid[0][1].val == their_symbol) or (
                         currentBoard.grid[2][0].val == their_symbol and currentBoard.grid[2][2].val == their_symbol):
                     # blocked!
-                    move_points[i] += localBlock;
+                    move_points[i] += localBlock
+                #check for local win
+                if (currentBoard.grid[1][1].val == my_symbol and currentBoard.grid[0][1].val == my_symbol) or (
+                        currentBoard.grid[2][0].val == my_symbol and currentBoard.grid[2][2].val == my_symbol):
+                    # blocked!
+                    move_points[i] += localWin
 
             elif move_made == 8: #bot right move
                 my_symbol = currentBoard.grid[2][2].val
@@ -158,7 +203,13 @@ class minimaxAgent:
                         currentBoard.grid[2][1].val == their_symbol and currentBoard.grid[2][0].val == their_symbol) or (
                         currentBoard.grid[1][1].val == their_symbol and currentBoard.grid[0][0].val == their_symbol):
                     # blocked!
-                    move_points[i] += localBlock;
+                    move_points[i] += localBlock
+                #check for local win
+                if (currentBoard.grid[1][2].val == my_symbol and currentBoard.grid[0][2].val == my_symbol) or (
+                        currentBoard.grid[2][1].val == my_symbol and currentBoard.grid[2][0].val == my_symbol) or (
+                        currentBoard.grid[1][1].val == my_symbol and currentBoard.grid[0][0].val == my_symbol):
+                    # blocked!
+                    move_points[i] += localWin
 
 
 
