@@ -3,7 +3,6 @@ import UltimateTTT
 import copy
 from TicTacToe import TicTacToe
 
-from randomAgent import randomAgent
 
 #This class holds the information of an agent that uses minimax
 class minimaxAgent:
@@ -12,16 +11,25 @@ class minimaxAgent:
         self.firstMove = None
 
 
-    # function returns list of possible next states
-    def getMoves(self,state):
+    # function returns list of possible next states and active boards
+    def getMoves(self,state,possibleMoves):
         states = []
-        moves = []
-        pass
-        return (moves,states)
+        active_boards = []
+        # generate possible states
+        for i,move in enumerate(possibleMoves):
+            state_copy = copy.deepcopy(state)
+            active_board = state_copy.move(possibleMoves[i])
+            states.append(state_copy)
+            active_boards.append(active_board)
 
+        #for state in states:
+            #print"POSS STATE"
+            #state.displayBoard()
 
-    # function evaluates current state and chooses best move
-    def evalBoard(self,state,possibleMoves):
+        return (active_boards, states)
+
+    # function evaluates current state and returns highest point return
+    def evalBoard(self,state):
 
         #define types of move. If a board is already won/lost, do not consider Block, Synergy, or Win in eval
         localBlock = 10
@@ -34,16 +42,17 @@ class minimaxAgent:
         oppGetsToBlock = -20
         oppGetsToBlockGlobal = -60
 
+        possibleMoves = state.mainGrid[state.currentBoard[0]][state.currentBoard[1]].getPossibleMoves()
         bestmove = 0
-        poss_moves, poss_states = self.getMoves(state) #poss_states is an UltimateTTT object, not just one TTT object
-        move_points = [0]*len(poss_moves)
-        bestpoints = 0
+        active_boards, poss_states = self.getMoves(state,possibleMoves) #poss_states is an UltimateTTT object, not just one TTT object
+        move_points = [0]*len(possibleMoves)
+        bestpoints = -10000
         for i, state in enumerate(poss_states):
             # evaluate state
             move_points[i] = 0
 
             #looking at     UTTT Board     mainboard       Y coord                      Xcoord
-            currentBoard = poss_states[i].mainGrid[poss_states[i].current_board[0]][poss_states[i].current_board[1]]
+            currentBoard = poss_states[i].mainGrid[poss_states[i].currentBoard[0]][poss_states[i].currentBoard[1]]
 
             move_made = possibleMoves[i]
             oppBoard = "" #This should be replaced with an empty TTT board that the following switch will replace
@@ -374,33 +383,44 @@ class minimaxAgent:
 
             if move_points[i] > bestpoints:
                 bestpoints = move_points[i]
-                bestmove = poss_moves[i]
+                bestmove = possibleMoves[i]
 
-        return bestmove
+        for x,points in enumerate(move_points):
+            print x," points = ",points
+
+        return bestpoints
 
 
     # function performs 'min' action - chooses best move of opponent and returns score
-    def minEval(self,state):
-        min_move = none
-        poss_moves, poss_states = self.getMoves(state)
+    def minEval(self, state):
+        min_move = 0
+        possibleMoves = state.mainGrid[state.currentBoard[0]][state.currentBoard[1]].getPossibleMoves()
+        active_boards, poss_states = self.getMoves(state, possibleMoves)
         min_points = 1000000
         for i, state in enumerate(poss_states):
             max_points = self.evalBoard(state)
             if max_points < min_points:
                 min_points = max_points
-                min_move = poss_moves[i]
-        return min_move
-
+                min_move = possibleMoves[i]
+        return min_points
 
     # function performs minimax algorithm
-    def minimax(self,curr_board):
-        poss_moves,poss_states = self.getMoves(curr_Board)
+    def minimax(self, curr_state, possibleMoves):
+        active_boards, poss_states = self.getMoves(curr_state, possibleMoves)
         max_points = -1000000
-        best_move = poss_moves[0]
-        for i,state in enumerate(poss_states):
+        best_move = possibleMoves[-1]
+        for i, state in enumerate(poss_states):
             min_points = self.minEval(state)
             if min_points > max_points:
                 max_points = min_points
-                best_move = i
+                best_move = possibleMoves[i]
         return best_move
+
+    # getMove - use minimax
+    def getMove(self, world, possibleMoves):
+        self.minimax(world, possibleMoves)
+
+    # getBoardMove - full board - choose a board
+    def getBoardMove(self, possibleBoards):
+        pass
 
