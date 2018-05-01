@@ -13,7 +13,7 @@ class rolloutAgent:
     #Uses rollout to pick a next move
     def getMove(self, world, possibleMoves, currentPlayer):
 
-        rolloutMultiplier = 100
+        rolloutMultiplier = 500
         printInfo = 1000
         #print(possibleMoves)
 
